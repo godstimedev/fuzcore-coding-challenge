@@ -1,0 +1,14 @@
+{
+  "name": "Coding Challenge",
+  "postCreateCommand": "npm install -g opencode-ai && npm install",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "sst-dev.opencode",
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "bradlc.vscode-tailwindcss"
+      ]
+    }
+  }
+}
