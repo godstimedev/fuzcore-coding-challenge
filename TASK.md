@@ -3,16 +3,18 @@
 ## Instructions
 
 - We have given you a simple full stack app with React, TS, Express, PGSQL running in docker
-- We ask you to fork this repo, and use AI to iterate and add different features according to the spec we have requested
-- You must record your screen during this task
+- We ask you to fork this repo, use AI throughout the task, and iterate on the app according to the spec we have requested
+- We want you to use the requested features as a foundation, but also bring your own ideas and creativity to the product where it adds value
+- You must record both your screen and your voice during this task
 - You can complete it at any time and send it to us
-- You will have 2 hours to complete the task
-- You may use AI during the task
+- You will have up to 2 hours to complete the task, though you can take less time if you wish
+- If you prefer, you can complete the work before recording, so long as you can clearly walk us through the code, the decisions you made, and the AI prompts you used
 - You must talk us through your thinking and problem solving during the task, why you are making decisions, how you are guiding the AI
 - Don't focus on unit testing so much - manual checks are fine
 - Remember to use git to commit your progress as you would normally
 - You can change anything about the stack as you wish (e.g. switch Express for some other backend) though we don't recommend this as it will waste time. You can use different providers other than Stripe or Gemini SDK which we have recommended if they are not available to you.
 - Submit the 2 hour video to us in an email or through LinkedIn
+- If your submission does not include voice audio, it will be disqualified
 
 ---
 

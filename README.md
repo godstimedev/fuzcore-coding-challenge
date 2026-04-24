@@ -2,6 +2,8 @@
 
 A minimal full-stack starter with React, Express, and PostgreSQL.
 
+See [TASK.md](./TASK.md) for the full challenge brief and candidate instructions.
+
 ## Tech Stack
 
 - **Frontend**: React 18, TypeScript, Tailwind CSS, Shadcn/ui, TanStack Query
