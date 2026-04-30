@@ -1,43 +1,31 @@
-import { QueryClient, QueryClientProvider, useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { Button } from "@/components/ui/button";
-
-const queryClient = new QueryClient();
-
-function CounterPage() {
-  const qc = useQueryClient();
-
-  const { data, isLoading } = useQuery<{ count: number }>({
-    queryKey: ["/api/counter"],
-    queryFn: () => fetch("/api/counter").then((r) => r.json()),
-  });
-
-  const increment = useMutation({
-    mutationFn: () =>
-      fetch("/api/counter/increment", { method: "POST" }).then((r) => r.json()),
-    onSuccess: () => qc.invalidateQueries({ queryKey: ["/api/counter"] }),
-  });
-
-  return (
-    <div className="flex flex-col items-center justify-center min-h-screen gap-6">
-      <h1 className="text-4xl font-bold">Counter</h1>
-      <p className="text-6xl font-mono">
-        {isLoading ? "…" : data?.count ?? 0}
-      </p>
-      <Button
-        onClick={() => increment.mutate()}
-        disabled={increment.isPending}
-        size="lg"
-      >
-        Increment
-      </Button>
-    </div>
-  );
-}
+import { Switch, Route, Redirect } from "wouter";
+import { APP_ROUTES } from "@/constants/routes";
+import { ProtectedRoute } from "@/components/ProtectedRoute";
+import { AppShell } from "@/components/layout/AppShell";
+import LoginPage from "@/pages/Login";
+import SignupPage from "@/pages/Signup";
+import DashboardPage from "@/pages/Dashboard";
 
 export default function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <CounterPage />
-    </QueryClientProvider>
+    <Switch>
+      <Route path={APP_ROUTES.LOGIN} component={LoginPage} />
+      <Route path={APP_ROUTES.SIGNUP} component={SignupPage} />
+      <Route path={APP_ROUTES.HOME}>
+        <Redirect to={APP_ROUTES.DASHBOARD} />
+      </Route>
+      <Route>
+        <ProtectedRoute>
+          <AppShell>
+            <Switch>
+              <Route path={APP_ROUTES.DASHBOARD} component={DashboardPage} />
+              <Route>
+                <div className="text-center py-20 text-neutral-500">Page not found</div>
+              </Route>
+            </Switch>
+          </AppShell>
+        </ProtectedRoute>
+      </Route>
+    </Switch>
   );
 }
