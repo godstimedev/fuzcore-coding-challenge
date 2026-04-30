@@ -1,6 +1,7 @@
 import { Switch, Route, Redirect } from "wouter";
 import { APP_ROUTES } from "@/constants/routes";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
+import { PublicOnlyRoute } from "@/components/PublicOnlyRoute";
 import { AppShell } from "@/components/layout/AppShell";
 import LoginPage from "@/pages/Login";
 import SignupPage from "@/pages/Signup";
@@ -15,8 +16,12 @@ import InvoiceDetailPage from "@/pages/Invoices/InvoiceDetail";
 export default function App() {
   return (
     <Switch>
-      <Route path={APP_ROUTES.LOGIN} component={LoginPage} />
-      <Route path={APP_ROUTES.SIGNUP} component={SignupPage} />
+      <Route path={APP_ROUTES.LOGIN}>
+        <PublicOnlyRoute><LoginPage /></PublicOnlyRoute>
+      </Route>
+      <Route path={APP_ROUTES.SIGNUP}>
+        <PublicOnlyRoute><SignupPage /></PublicOnlyRoute>
+      </Route>
       <Route path={APP_ROUTES.HOME}>
         <Redirect to={APP_ROUTES.DASHBOARD} />
       </Route>
