@@ -6,4 +6,7 @@ export const APP_ROUTES = {
   CUSTOMERS: "/customers",
   TRANSACTIONS: "/transactions",
   INVOICES: "/invoices",
+  INVOICES_NEW: "/invoices/new",
+  INVOICE_DETAIL: (id: string) => `/invoices/${id}`,
+  INVOICE_EDIT: (id: string) => `/invoices/${id}/edit`,
 } as const;

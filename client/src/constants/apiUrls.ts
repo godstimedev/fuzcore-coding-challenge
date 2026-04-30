@@ -20,6 +20,7 @@ export const API_URLS = {
   INVOICES: {
     BASE: "/api/invoices",
     BY_ID: (id: string) => `/api/invoices/${id}`,
+    STATUS: (id: string) => `/api/invoices/${id}/status`,
   },
   AI: {
     CATEGORIZE: "/api/ai/categorize",

@@ -7,6 +7,9 @@ import SignupPage from "@/pages/Signup";
 import DashboardPage from "@/pages/Dashboard";
 import CustomersPage from "@/pages/Customers";
 import TransactionsPage from "@/pages/Transactions";
+import InvoicesPage from "@/pages/Invoices";
+import InvoiceFormPage from "@/pages/Invoices/InvoiceForm";
+import InvoiceDetailPage from "@/pages/Invoices/InvoiceDetail";
 
 export default function App() {
   return (
@@ -23,6 +26,17 @@ export default function App() {
               <Route path={APP_ROUTES.DASHBOARD} component={DashboardPage} />
               <Route path={APP_ROUTES.CUSTOMERS} component={CustomersPage} />
               <Route path={APP_ROUTES.TRANSACTIONS} component={TransactionsPage} />
+              {/* Invoice routes — specific paths before the :id wildcard */}
+              <Route path={APP_ROUTES.INVOICES_NEW}>
+                <InvoiceFormPage />
+              </Route>
+              <Route path="/invoices/:id/edit">
+                {(params: { id: string }) => <InvoiceFormPage id={params.id} />}
+              </Route>
+              <Route path="/invoices/:id">
+                {(params: { id: string }) => <InvoiceDetailPage id={params.id} />}
+              </Route>
+              <Route path={APP_ROUTES.INVOICES} component={InvoicesPage} />
               <Route>
                 <div className="text-center py-20 text-neutral-500">Page not found</div>
               </Route>
