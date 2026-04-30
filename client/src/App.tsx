@@ -7,6 +7,7 @@ import SignupPage from "@/pages/Signup";
 import DashboardPage from "@/pages/Dashboard";
 import CustomersPage from "@/pages/Customers";
 import TransactionsPage from "@/pages/Transactions";
+import CategoriesPage from "@/pages/Categories";
 import InvoicesPage from "@/pages/Invoices";
 import InvoiceFormPage from "@/pages/Invoices/InvoiceForm";
 import InvoiceDetailPage from "@/pages/Invoices/InvoiceDetail";
@@ -26,6 +27,7 @@ export default function App() {
               <Route path={APP_ROUTES.DASHBOARD} component={DashboardPage} />
               <Route path={APP_ROUTES.CUSTOMERS} component={CustomersPage} />
               <Route path={APP_ROUTES.TRANSACTIONS} component={TransactionsPage} />
+              <Route path={APP_ROUTES.CATEGORIES} component={CategoriesPage} />
               {/* Invoice routes — specific paths before the :id wildcard */}
               <Route path={APP_ROUTES.INVOICES_NEW}>
                 <InvoiceFormPage />

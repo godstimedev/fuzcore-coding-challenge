@@ -31,7 +31,9 @@ import { useCreateTransaction } from '@/hooks/transactions/useCreateTransaction'
 import { useUpdateTransaction } from '@/hooks/transactions/useUpdateTransaction';
 import { useCategories } from '@/hooks/categories/useCategories';
 import { useCustomers } from '@/hooks/customers/useCustomers';
+import { useSuggestCategory } from '@/hooks/transactions/useSuggestCategory';
 import { toast } from 'sonner';
+import { Sparkles } from 'lucide-react';
 import type { Transaction } from '@shared/schema';
 
 const NONE = 'none' as const;
@@ -65,6 +67,7 @@ export function TransactionFormDialog({ open, onOpenChange, transaction, onDone 
 	const { mutate: update, isPending: isUpdating } = useUpdateTransaction();
 	const { data: categories = [] } = useCategories();
 	const { data: customers = [] } = useCustomers();
+	const { mutate: suggest, isPending: isSuggesting } = useSuggestCategory();
 	const isPending = isCreating || isUpdating;
 
 	const form = useForm<FormValues>({
@@ -79,6 +82,7 @@ export function TransactionFormDialog({ open, onOpenChange, transaction, onDone 
 	});
 
 	const selectedType = form.watch('type');
+	const currentDescription = form.watch('description');
 	const filteredCategories = categories.filter((c) => c.type === selectedType);
 
 	useEffect(() => {
@@ -93,6 +97,31 @@ export function TransactionFormDialog({ open, onOpenChange, transaction, onDone 
 			});
 		}
 	}, [open, transaction]);
+
+	function handleSuggest() {
+		const description = currentDescription?.trim();
+		if (!description) {
+			toast.error('Enter a description first so the AI has context to work with');
+			return;
+		}
+		suggest(
+			{ description, type: selectedType },
+			{
+				onSuccess: (result) => {
+					if (result.categoryId) {
+						form.setValue('categoryId', result.categoryId);
+						const matched = filteredCategories.find((c) => c.id === result.categoryId);
+						toast.success(`Category suggested: ${matched?.name ?? result.categoryId} (${result.confidence} confidence)`);
+					} else if (result.suggestedName) {
+						toast.info(`No matching category found. Consider creating "${result.suggestedName}".`);
+					} else {
+						toast.info('No category match found for this description.');
+					}
+				},
+				onError: () => toast.error('AI suggestion failed. Please try again.'),
+			},
+		);
+	}
 
 	function onSubmit(values: FormValues) {
 		const payload = {
@@ -201,7 +230,21 @@ export function TransactionFormDialog({ open, onOpenChange, transaction, onDone 
 								name="categoryId"
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>Category</FormLabel>
+										<div className="flex items-center justify-between">
+											<FormLabel>Category</FormLabel>
+											<Button
+												type="button"
+												variant="ghost"
+												size="sm"
+												className="h-6 px-2 text-xs gap-1 text-violet-600 hover:text-violet-700 hover:bg-violet-50"
+												onClick={handleSuggest}
+												disabled={isSuggesting || !currentDescription?.trim()}
+												title="Use AI to suggest a category based on the description"
+											>
+												<Sparkles className="w-3 h-3" />
+												{isSuggesting ? 'Thinking…' : 'Suggest'}
+											</Button>
+										</div>
 										<Select
 											onValueChange={field.onChange}
 											value={field.value ?? ''}

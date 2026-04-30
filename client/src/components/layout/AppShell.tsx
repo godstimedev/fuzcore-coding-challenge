@@ -5,12 +5,13 @@ import { useQueryClient } from "@tanstack/react-query";
 import { APP_ROUTES } from "@/constants/routes";
 import { toast } from "sonner";
 import type { ReactNode } from "react";
-import { LayoutDashboard, Users, ArrowLeftRight, FileText, LogOut, BookOpen } from "lucide-react";
+import { LayoutDashboard, Users, ArrowLeftRight, FileText, LogOut, BookOpen, Tag } from "lucide-react";
 
 const NAV_LINKS = [
   { label: "Dashboard", href: APP_ROUTES.DASHBOARD, icon: LayoutDashboard },
   { label: "Customers", href: APP_ROUTES.CUSTOMERS, icon: Users },
   { label: "Transactions", href: APP_ROUTES.TRANSACTIONS, icon: ArrowLeftRight },
+  { label: "Categories", href: APP_ROUTES.CATEGORIES, icon: Tag },
   { label: "Invoices", href: APP_ROUTES.INVOICES, icon: FileText },
 ];
 
